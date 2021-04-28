@@ -20,8 +20,7 @@ for race in Races:
                 image_path = os.path.join(images_root, name)
                 images_of_person = os.listdir(os.path.join(images_root, name))
                 for name in  images_of_person: 
-                detect.py --image name
-                 if 
+                     detect.py --image name
             count= count + 1
             data=temp
             data=np.sort(data)
