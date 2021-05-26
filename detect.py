@@ -4,7 +4,7 @@ import cv2
 import math
 import argparse
 
-def highlightFace(net, frame, conf_threshold=0.7):
+def highlightFace(net, frame, conf_threshold):
     frameOpencvDnn=frame.copy()
     frameHeight=frameOpencvDnn.shape[0]
     frameWidth=frameOpencvDnn.shape[1]
@@ -22,11 +22,12 @@ def highlightFace(net, frame, conf_threshold=0.7):
             y2=int(detections[0,0,i,6]*frameHeight)
             faceBoxes.append([x1,y1,x2,y2])
             cv2.rectangle(frameOpencvDnn, (x1,y1), (x2,y2), (0,255,0), int(round(frameHeight/150)), 8)
-    return frameOpencvDnn,faceBoxes
+    return frameOpencvDnn,faceBoxes,confidence
 
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--image')
+parser.add_argument('--conf_threshold')
 
 args=parser.parse_args()
 
@@ -53,7 +54,7 @@ while cv2.waitKey(1)<0 :
         cv2.waitKey()
         break
     
-    resultImg,faceBoxes=highlightFace(faceNet,frame)
+    resultImg,faceBoxes=highlightFace(faceNet,frame,args.conf_threshold)
     if not faceBoxes:
         print("No face detected")
 
@@ -72,6 +73,6 @@ while cv2.waitKey(1)<0 :
         agePreds=ageNet.forward()
         age=ageList[agePreds[0].argmax()]
         print(f'Age: {age[1:-1]} years')
-
+        print( confidence  
         cv2.putText(resultImg, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         cv2.imwrite("age_gender.png", resultImg)
