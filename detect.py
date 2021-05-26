@@ -56,11 +56,11 @@ while cv2.waitKey(1)<0 :
         cv2.waitKey()
         break
     
-    resultImg,faceBoxes,confidence =highlightFace(faceNet,frame,args.conf_threshold)
+    resultImg,faceBoxes,confidences =highlightFace(faceNet,frame,args.conf_threshold)
     if not faceBoxes:
         print("No face detected")
-
-    for faceBox in faceBoxes:
+    
+    for (faceBox,confidence) in zip(faceBoxes , confidences):
         face=frame[max(0,faceBox[1]-padding):
                    min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
                    :min(faceBox[2]+padding, frame.shape[1]-1)]
