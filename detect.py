@@ -27,7 +27,7 @@ def highlightFace(net, frame, conf_threshold):
 
 parser=argparse.ArgumentParser()
 parser.add_argument('--image')
-parser.add_argument('--conf_threshold')
+parser.add_argument('--conf_threshold',type=float)
 
 args=parser.parse_args()
 
