@@ -23,7 +23,7 @@ def highlightFace(net, frame, conf_threshold):
             y2=int(detections[0,0,i,6]*frameHeight)
             faceBoxes.append([x1,y1,x2,y2])
             cv2.rectangle(frameOpencvDnn, (x1,y1), (x2,y2), (0,255,0), int(round(frameHeight/150)), 8)
-            confidences = confidence.append(confidence)
+            confidences.append(confidence)
     return frameOpencvDnn,faceBoxes,confidences
 
 
