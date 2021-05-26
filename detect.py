@@ -13,6 +13,7 @@ def highlightFace(net, frame, conf_threshold):
     net.setInput(blob)
     detections=net.forward()
     faceBoxes=[]
+    confidences=[]
     for i in range(detections.shape[2]):
         confidence=detections[0,0,i,2]
         if confidence>conf_threshold:
@@ -22,7 +23,8 @@ def highlightFace(net, frame, conf_threshold):
             y2=int(detections[0,0,i,6]*frameHeight)
             faceBoxes.append([x1,y1,x2,y2])
             cv2.rectangle(frameOpencvDnn, (x1,y1), (x2,y2), (0,255,0), int(round(frameHeight/150)), 8)
-    return frameOpencvDnn,faceBoxes,confidence
+            confidences = confidence.append(confidence)
+    return frameOpencvDnn,faceBoxes,confidences
 
 
 parser=argparse.ArgumentParser()
