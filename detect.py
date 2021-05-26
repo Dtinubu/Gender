@@ -54,7 +54,7 @@ while cv2.waitKey(1)<0 :
         cv2.waitKey()
         break
     
-    resultImg,faceBoxes=highlightFace(faceNet,frame,args.conf_threshold)
+    resultImg,faceBoxes,confidence =highlightFace(faceNet,frame,args.conf_threshold)
     if not faceBoxes:
         print("No face detected")
 
@@ -73,6 +73,6 @@ while cv2.waitKey(1)<0 :
         agePreds=ageNet.forward()
         age=ageList[agePreds[0].argmax()]
         print(f'Age: {age[1:-1]} years')
-        print( confidence  
+        print(f'Confidence:{confidence}')
         cv2.putText(resultImg, f'{gender}, {age}', (faceBox[0], faceBox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,255), 2, cv2.LINE_AA)
         cv2.imwrite("age_gender.png", resultImg)
